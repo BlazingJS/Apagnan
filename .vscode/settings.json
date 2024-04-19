@@ -50,6 +50,8 @@
         "queue": "cpp",
         "stack": "cpp",
         "unordered_map": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "__tree": "cpp",
+        "map": "cpp"
     }
 }

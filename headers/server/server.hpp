@@ -8,10 +8,13 @@
 #include <functional>
 
 #include "logger/logger.hpp"
+#include "server/request.hpp"
 
 class Server
 {
     public:
+        Request request;
+
         Server(int, size_t);
         ~Server();
         

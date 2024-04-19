@@ -6,6 +6,7 @@ Server::Server(int port, size_t buffer_size)
     this->buffer_size = buffer_size;
 
     this->logger = Logger();
+    this->request = Request();
 
     this->methodHandlers["GET"] = &Server::handleGetRequest;
     this->methodHandlers["POST"] = &Server::handlePostRequest;
@@ -120,8 +121,17 @@ void Server::HandleClient(int client_socket)
 
 void Server::handleGetRequest(int client_socket)
 {
-    // Handle GET request
-    const char *response = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nGET request!";
+    std::vector<std::string> data = {
+        "HTTP/1.1 200 OK",
+        "Content-Type: text/plain",
+        "Content-Length: 12\n",
+        "GET request!"
+    };
+    const char *response = this->request.Send(
+        "TEST",
+        data
+    );
+    
     send(client_socket, response, strlen(response), 0);
 }
 
