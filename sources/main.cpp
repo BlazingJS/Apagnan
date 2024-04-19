@@ -1,10 +1,10 @@
-#include "server.hpp"
+#include "server/server.hpp"
 
 int main(int argc, char **argv)
 {
     int port = 8080;
 
-    Server server = Server();
+    Server server = Server(port, 1024);
 
     server.Start();
 

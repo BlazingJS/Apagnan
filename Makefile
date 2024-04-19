@@ -3,7 +3,7 @@ SOURCE := sources
 OBJS := $(patsubst %.cpp, %.o, $(shell find $(SOURCE) -type f -name "*.cpp"))
 HFILE := $(wildcard $(INCLUDE)/*.hpp)
 NAME := Apagnan
-INC_FLAG := -I $(INCLUDE) -g3 -Weverything -Wno-gnu -march=native -Wno-c++98-compat -Wno-padded -Wnon-virtual-dtor -Wno-weak-vtables
+INC_FLAG := -I $(INCLUDE) -g3 -Weverything -Wno-gnu -march=native -Wno-c++98-compat -Wno-padded -Wnon-virtual-dtor -Wno-weak-vtables -std=c++20
 OBJ_FLAG := -g3 -Weverything -Wno-gnu -march=native
 DEBUG_FLAGS := -O0
 CXX := @clang++
