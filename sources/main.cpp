@@ -3,10 +3,12 @@
 int main(int argc, char **argv)
 {
     int port = 8080;
+    int buffer_size = 1024;
 
-    Server server = Server(port, 1024);
-
-    server.Start();
+    Server server = Server(
+        port,
+        buffer_size
+    );
 
     return 0;
 }
