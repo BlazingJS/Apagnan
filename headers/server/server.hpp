@@ -8,9 +8,9 @@
     #include <sstream>
     #include <map>
     #include <functional>
+    #include <csignal>
 
     #include "logger/logger.hpp"
-    #include "signal/Handler.hpp"
     #include "server/request.hpp"
 
     class Server
@@ -41,14 +41,12 @@
             struct sockaddr_in address;
 
             Logger logger;
-            Handler signal_Handler;
 
             bool CreateSocket();
             bool Bind();
             bool Listen();
             void Core();
             void HandleClient(int);
-            void HandleSignal(int);
 
             std::string GetHttpMethod(const char *);
             void HandleGetRequest(int);

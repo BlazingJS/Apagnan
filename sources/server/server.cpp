@@ -7,18 +7,6 @@ Server::Server(int port, size_t buffer_size)
 
     this->logger = Logger();
     this->request = Request();
-    // this->signal_Handler = SignalHandler();
-
-    this->methodHandlers["GET"] = &Server::HandleGetRequest;
-    this->methodHandlers["POST"] = &Server::HandlePostRequest;
-    this->methodHandlers["PUT"] = &Server::HandlePutRequest;
-    this->methodHandlers["OPTIONS"] = &Server::HandleOptionsRequest;
-    this->methodHandlers["DELETE"] = &Server::HandleDeleteRequest;
-    this->methodHandlers["PATCH"] = &Server::HandlePatchRequest;
-    this->methodHandlers["UPDATE"] = &Server::HandleUpdateRequest;
-
-    signal(SIGINT, &Server::HandleSignal);
-    signal(SIGTERM, &Server::HandleSignal);
 
     Start();
 }
@@ -98,18 +86,7 @@ void Server::Stop()
 {
     close(this->server_fd);
 
-    for (int client_socket : this->client_sockets) {
-        close(client_socket);
-    }
-
     this->logger.Information("server stopped");
-}
-
-void Server::HandleSignal(int signal)
-{
-    this->Stop();
-
-    exit(signal);
 }
 
 std::string Server::GetHttpMethod(const char *request)

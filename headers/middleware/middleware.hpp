@@ -7,6 +7,5 @@
     class Middleware
     {
         public:
-            virtual Logger logger;
-            virtual void handleRequest(std::string &request) = 0;
+            virtual void HandleRequest(std::string &request) = 0;
     };

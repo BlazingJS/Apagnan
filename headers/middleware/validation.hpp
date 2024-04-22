@@ -17,5 +17,5 @@
             void HandleRequest(std::string &request) override;
         
         private:
-            Logger logger override;
+            Logger logger;
     };
