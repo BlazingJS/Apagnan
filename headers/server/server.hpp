@@ -1,61 +1,63 @@
-#include <iostream>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <cstring>
-#include <sstream>
-#include <map>
-#include <functional>
+#pragma once
 
-#include "logger/logger.hpp"
-#include "signal/handler.hpp"
-#include "server/request.hpp"
+    #include <iostream>
+    #include <sys/socket.h>
+    #include <netinet/in.h>
+    #include <unistd.h>
+    #include <cstring>
+    #include <sstream>
+    #include <map>
+    #include <functional>
 
-class Server
-{
-    public:
-        Request request;
+    #include "logger/logger.hpp"
+    #include "signal/Handler.hpp"
+    #include "server/request.hpp"
 
-        Server(int, size_t);
-        ~Server();
-        
-        void Start();
-        void Stop();
+    class Server
+    {
+        public:
+            Request request;
 
-    private:
-        int port = 8080;
-        int server_fd;
-        size_t buffer_size = 1024;
-        std::map<std::string, std::function<void(Server&, int)>> methodHandlers = {
-            {"GET", &Server::handleGetRequest},
-            {"POST", &Server::handlePostRequest},
-            {"PUT", &Server::handlePutRequest},
-            {"OPTIONS", &Server::handleOptionsRequest},
-            {"DELETE", &Server::handleDeleteRequest},
-            {"PATCH", &Server::handlePatchRequest},
-            {"UPDATE", &Server::handleUpdateRequest}
-        };
+            Server(int, size_t);
+            ~Server();
+            
+            void Start();
+            void Stop();
 
-        struct sockaddr_in address;
+        private:
+            int port = 8080;
+            int server_fd;
+            size_t buffer_size = 1024;
+            std::map<std::string, std::function<void(Server&, int)>> methodHandlers = {
+                {"GET", &Server::HandleGetRequest},
+                {"POST", &Server::HandlePostRequest},
+                {"PUT", &Server::HandlePutRequest},
+                {"OPTIONS", &Server::HandleOptionsRequest},
+                {"DELETE", &Server::HandleDeleteRequest},
+                {"PATCH", &Server::HandlePatchRequest},
+                {"UPDATE", &Server::HandleUpdateRequest}
+            };
 
-        Logger logger;
-        Handler signal_handler;
+            struct sockaddr_in address;
 
-        bool CreateSocket();
-        bool Bind();
-        bool Listen();
-        void Core();
-        void HandleClient(int);
-        void HandleSignal(int);
+            Logger logger;
+            Handler signal_Handler;
 
-        std::string GetHttpMethod(const char *);
-        void handleGetRequest(int);
-        void handlePostRequest(int);
-        void handlePutRequest(int);
-        void handlePatchRequest(int);
-        void handleOptionsRequest(int);
-        void handleDeleteRequest(int);
-        void handleUpdateRequest(int);
-        void handleConnectRequest(int);
-        void handleTraceRequest(int);
-};
+            bool CreateSocket();
+            bool Bind();
+            bool Listen();
+            void Core();
+            void HandleClient(int);
+            void HandleSignal(int);
+
+            std::string GetHttpMethod(const char *);
+            void HandleGetRequest(int);
+            void HandlePostRequest(int);
+            void HandlePutRequest(int);
+            void HandlePatchRequest(int);
+            void HandleOptionsRequest(int);
+            void HandleDeleteRequest(int);
+            void HandleUpdateRequest(int);
+            void HandleConnectRequest(int);
+            void HandleTraceRequest(int);
+    };

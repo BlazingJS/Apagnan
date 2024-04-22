@@ -1,14 +1,17 @@
-#include <iostream>
-#include <vector>
-#include <format>
+#pragma once
 
-class Request
-{
-    public:
-        Request();
-        ~Request();
+    #include <iostream>
+    #include <vector>
+    #include <format>
 
-        char *Send(std::string, std::vector<std::string>);
-    private:
-        char *Build(std::vector<std::string>);
-};
+    class Request
+    {
+        public:
+            Request();
+            ~Request();
+
+            char *Send(std::string, std::vector<std::string>);
+
+        private:
+            char *Build(std::vector<std::string>);
+    };
