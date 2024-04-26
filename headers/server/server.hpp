@@ -28,15 +28,6 @@
             int port = 8080;
             int server_fd;
             size_t buffer_size = 1024;
-            std::map<std::string, std::function<void(Server&, int)>> methodHandlers = {
-                {"GET", &Server::HandleGetRequest},
-                {"POST", &Server::HandlePostRequest},
-                {"PUT", &Server::HandlePutRequest},
-                {"OPTIONS", &Server::HandleOptionsRequest},
-                {"DELETE", &Server::HandleDeleteRequest},
-                {"PATCH", &Server::HandlePatchRequest},
-                {"UPDATE", &Server::HandleUpdateRequest}
-            };
 
             struct sockaddr_in address;
 

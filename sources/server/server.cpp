@@ -108,153 +108,16 @@ void Server::HandleClient(int client_socket)
 
     std::string method = GetHttpMethod(buffer);
 
-    auto it = methodHandlers.find(method);
+    std::vector<std::string> header = {
+        "header"
+    };
 
-    if (it != methodHandlers.end()) {
-        it->second(*this, client_socket);
-    } else {
-        HandleGetRequest(client_socket);
-    }
+    std::vector<std::string> data = {
+        "data"
+    };
 
+    this->request.GET(client_socket, header, data);
 
     close(client_socket);
 }
 
-void Server::HandleGetRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 12\n",
-        "GET request!"
-    };
-    const char *response = this->request.Send(
-        "GET",
-        data
-    );
-    
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandlePostRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 13\n",
-        "POST request!"
-    };
-    const char *response = this->request.Send(
-        "POST",
-        data
-    );
-    
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandlePutRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 12\n",
-        "POST request!"
-    };
-    const char *response = this->request.Send(
-        "PUT",
-        data
-    );
-
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandlePatchRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 14\n",
-        "PATCH request!"
-    };
-    const char *response = this->request.Send(
-        "PATCH",
-        data
-    );
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandleOptionsRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 16\n",
-        "OPTIONS request!"
-    };
-    const char *response = this->request.Send(
-        "OPTIONS",
-        data
-    );
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandleDeleteRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 15\n",
-        "DELETE request!"
-    };
-    const char *response = this->request.Send(
-        "DELETE",
-        data
-    );
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandleTraceRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 15\n",
-        "TRACE request!"
-    };
-    const char *response = this->request.Send(
-        "DELETE",
-        data
-    );
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandleUpdateRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 15\n",
-        "UPDATE request!"
-    };
-    const char *response = this->request.Send(
-        "UPDATE",
-        data
-    );
-    send(client_socket, response, strlen(response), 0);
-}
-
-void Server::HandleConnectRequest(int client_socket)
-{
-    std::vector<std::string> data = {
-        "HTTP/1.1 200 OK",
-        "Content-Type: text/plain",
-        "Content-Length: 16\n",
-        "CONNECT request!"
-    };
-    const char *response = this->request.Send(
-        "CONNECT",
-        data
-    );
-
-    send(client_socket, response, strlen(response), 0);
-}
