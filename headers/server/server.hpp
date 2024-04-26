@@ -40,13 +40,4 @@
             void HandleClient(int);
 
             std::string GetHttpMethod(const char *);
-            void HandleGetRequest(int);
-            void HandlePostRequest(int);
-            void HandlePutRequest(int);
-            void HandlePatchRequest(int);
-            void HandleOptionsRequest(int);
-            void HandleDeleteRequest(int);
-            void HandleUpdateRequest(int);
-            void HandleConnectRequest(int);
-            void HandleTraceRequest(int);
     };

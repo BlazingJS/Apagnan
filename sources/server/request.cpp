@@ -1,4 +1,5 @@
 #include "server/request.hpp"
+#include "tools/concat.hpp"
 
 Request::Request()
 {
@@ -10,7 +11,13 @@ Request::~Request()
 
 }
 
-char *Request::Send(int client_socket, std::vector<std::string> headers, std::vector<std::string> data)
+size_t Request::ContentLength(std::string content)
+{
+    return (content.length());
+}
+
+template <typename T>
+char *Request::Send(int client_socket, std::vector<std::string> headers, T const &data)
 {
     char *buffer = Build(data);
 
@@ -24,7 +31,7 @@ char *Request::Build(std::vector<std::string> items)
     std::string buffer = "";
     char *array = nullptr;
 
-    for(const std::string& item : items) {
+    for(const std::string &item : items) {
         buffer += item + '\n';
     }
 
@@ -34,7 +41,8 @@ char *Request::Build(std::vector<std::string> items)
     return array;
 }
 
-void Request::GET(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::GET(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -50,7 +58,8 @@ void Request::GET(int client_socket, std::vector<std::string> header, std::vecto
     );
 }
 
-void Request::POST(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::POST(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -66,7 +75,8 @@ void Request::POST(int client_socket, std::vector<std::string> header, std::vect
     );
 }
 
-void Request::PUT(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::PUT(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -82,7 +92,8 @@ void Request::PUT(int client_socket, std::vector<std::string> header, std::vecto
     );
 }
 
-void Request::PATCH(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::PATCH(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -98,7 +109,8 @@ void Request::PATCH(int client_socket, std::vector<std::string> header, std::vec
     );
 }
 
-void Request::OPTIONS(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::OPTIONS(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -114,7 +126,8 @@ void Request::OPTIONS(int client_socket, std::vector<std::string> header, std::v
     );
 }
 
-void Request::DELETE(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::DELETE(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -130,7 +143,8 @@ void Request::DELETE(int client_socket, std::vector<std::string> header, std::ve
     );
 }
 
-void Request::TRACE(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::TRACE(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -146,7 +160,8 @@ void Request::TRACE(int client_socket, std::vector<std::string> header, std::vec
     );
 }
 
-void Request::UPDATE(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::UPDATE(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",
@@ -162,7 +177,8 @@ void Request::UPDATE(int client_socket, std::vector<std::string> header, std::ve
     );
 }
 
-void Request::CONNECT(int client_socket, std::vector<std::string> header, std::vector<std::string> data)
+template <typename T>
+void Request::CONNECT(int client_socket, std::vector<std::string> header, T const &data)
 {
     data = {
         "HTTP/1.1 200 OK",

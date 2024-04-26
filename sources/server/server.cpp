@@ -7,8 +7,6 @@ Server::Server(int port, size_t buffer_size)
 
     this->logger = Logger();
     this->request = Request();
-
-    Start();
 }
 
 Server::~Server()
@@ -112,11 +110,8 @@ void Server::HandleClient(int client_socket)
         "header"
     };
 
-    std::vector<std::string> data = {
-        "data"
-    };
 
-    this->request.GET(client_socket, header, data);
+    this->request.GET(client_socket, header, 0);
 
     close(client_socket);
 }

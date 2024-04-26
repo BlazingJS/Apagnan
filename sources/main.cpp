@@ -10,5 +10,7 @@ int main(int argc, char **argv)
         buffer_size
     );
 
+    server.Start();
+
     return 0;
 }
