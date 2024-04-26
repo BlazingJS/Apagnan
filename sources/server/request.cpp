@@ -16,16 +16,6 @@ size_t Request::ContentLength(std::string content)
     return (content.length());
 }
 
-template <typename T>
-char *Request::Send(int client_socket, std::vector<std::string> headers, T const &data)
-{
-    char *buffer = Build(data);
-
-    send(client_socket, buffer, strlen(buffer), 0);
-
-    return (nullptr);
-}
-
 char *Request::Build(std::vector<std::string> items)
 {
     std::string buffer = "";
@@ -39,6 +29,16 @@ char *Request::Build(std::vector<std::string> items)
     std::strcpy(array, buffer.c_str());
     
     return array;
+}
+
+template <typename T>
+char *Request::Send(int client_socket, std::vector<std::string> headers, T const &data)
+{
+    char *buffer = Build(data);
+
+    send(client_socket, buffer, strlen(buffer), 0);
+
+    return (nullptr);
 }
 
 template <typename T>

@@ -110,7 +110,6 @@ void Server::HandleClient(int client_socket)
         "header"
     };
 
-
     this->request.GET(client_socket, header, 0);
 
     close(client_socket);
